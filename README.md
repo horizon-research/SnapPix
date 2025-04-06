@@ -16,6 +16,15 @@ Apply downsampling, inverse gamma correction, and grayscale conversion to datase
 ```bash
 python preprocess_data.py ../../OpenDataLab___sthv2/raw/sthv2/sthv2/videos/ ssv2_processed/ --input_format .webm
 ```
+See dataset/preprocessing.sh for more examples.
+
+Process csv of SSV2:
+```bash
+# for finetuning dataset
+python3 dataset/ssv2_list_process.py input.csv output.csv
+# for pretraining dataset
+python3 dataset/ssv2_list_process.py input.csv output.csv --pretrained
+```
 
 ### 🧹 Generate K710 (Pretrain Dataset)  
 Combining preprocessed K400 / K600 / K700 / SSV2 into one dataset:
@@ -23,6 +32,11 @@ Combining preprocessed K400 / K600 / K700 / SSV2 into one dataset:
 ```bash
 python3 combine_pretrained.py dataset_lists/K710/train.csv dataset_lists/SSV2/train.csv \
 mmdataset/k400_processed mmdataset/k600_processed mmdataset/k700_processed mmdataset/ssv2_processed combined_pretrain
+```
+
+Copy K400 / K600 / K700 to K710:
+```bash
+bash dataset/copy_k710.sh
 ```
 
 ---
