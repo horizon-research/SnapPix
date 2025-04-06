@@ -1,0 +1,19 @@
+Epoch[init]: Sparsity: 0.4951171875
+Epoch [init/5]	 Val Decorrelation Loss: 0.28875653384076044
+Epoch[init_sparse]: Sparsity: 0.9375
+Epoch [init_sparse/5]	 Val Decorrelation Loss: 0.23025570926755462
+Epoch [1/5]	 Train Decorrelation Loss (MSE): 0.03142518534000774
+Epoch [1/5]	 Val Decorrelation Loss (L1): 0.15700180563890323
+Epoch[0]: Sparsity: 0.888671875
+Epoch [2/5]	 Train Decorrelation Loss (MSE): 0.030499005590968267
+Epoch [2/5]	 Val Decorrelation Loss (L1): 0.15763697309921165
+Epoch[1]: Sparsity: 0.8837890625
+Epoch [3/5]	 Train Decorrelation Loss (MSE): 0.030528125184665456
+Epoch [3/5]	 Val Decorrelation Loss (L1): 0.15665234249217047
+Epoch[2]: Sparsity: 0.884765625
+Epoch [4/5]	 Train Decorrelation Loss (MSE): 0.03051730153950617
+Epoch [4/5]	 Val Decorrelation Loss (L1): 0.15513216699348956
+Epoch[3]: Sparsity: 0.884765625
+Epoch [5/5]	 Train Decorrelation Loss (MSE): 0.03043096883584834
+Epoch [5/5]	 Val Decorrelation Loss (L1): 0.1566138718431027
+Epoch[4]: Sparsity: 0.88671875

@@ -1,0 +1,14 @@
+dataset/dataset_lists/K400/** 
+dataset/dataset_lists/K600/** 
+dataset/dataset_lists/K710/** 
+dataset/dataset_lists/SSV2/** 
+dataset/dataset_lists/SSV2_Mine/** 
+**/mmdataset/**
+**/torch_kinetics_datasets/**
+dataset/combined_pretrain/**
+dataset/ucf101_list/**
+**/archive/**
+**/local/**
+**/video_super_tiny_pretrain/**
+.aider*
+.env

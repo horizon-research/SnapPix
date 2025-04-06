@@ -1,0 +1,5 @@
+bash scripts/my_pretrain/coded_vits_reconstruction.sh short
+bash scripts/my_pretrain/coded_vits_reconstruction.sh long
+bash scripts/my_pretrain/coded_vits_reconstruction.sh naive
+bash scripts/my_pretrain/coded_vits_reconstruction.sh sparse
+bash scripts/my_pretrain/coded_vits_reconstruction.sh decor_fix

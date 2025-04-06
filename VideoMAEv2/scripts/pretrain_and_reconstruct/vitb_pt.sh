@@ -1,0 +1,1 @@
+bash scripts/my_pretrain/coded_vitb_hybrid_pt_multigpu.sh decor_fix

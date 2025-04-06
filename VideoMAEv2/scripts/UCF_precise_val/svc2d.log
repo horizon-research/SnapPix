@@ -1,0 +1,320 @@
++ unset SLURM_PROCID
++ export MASTER_PORT=16153
++ MASTER_PORT=16153
++ export OMP_NUM_THREADS=1
++ OMP_NUM_THREADS=1
++ export CUDA_VISIBLE_DEVICES=0
++ CUDA_VISIBLE_DEVICES=0
++ OUTPUT_DIR=local/UCF/svc2d
++ DATA_PATH=../dataset/shared_list/UCF
++ python3 -m torch.distributed.launch --nproc_per_node=1 --master_port=16153 --nnodes=1 run_coded_class_finetuning.py --model svc2d --data_set UCF101 --nb_classes 101 --data_root /localdisk2/dataset/mmdataset --data_path ../dataset/shared_list/UCF --log_dir local/UCF/svc2d --output_dir local/UCF/svc2d --batch_size 32 --num_sample 2 --input_size 112 --short_side_size 112 --save_ckpt_freq 40 --num_frames 16 --opt adamw --lr 2e-4 --clip_grad 1.0 --num_workers 12 --opt_betas 0.9 0.999 --weight_decay 0.05 --layer_decay 1.0 --epochs 200 --test_num_segment 2 --test_num_crop 3 --local-rank 0 --update_freq 1 --warmup_epochs 30 --coded_template_folder ./decorrelation_training_wd0_norm_new --coded_type pami --cross_model None --validation
+/opt/conda/lib/python3.10/site-packages/torch/distributed/launch.py:183: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use-env is set by default in torchrun.
+If your script expects `--local-rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+[2024-11-17 05:15:17,108] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+| distributed init (rank 0): env://, gpu 0
+Namespace(batch_size=32, epochs=200, update_freq=1, save_ckpt_freq=40, model='svc2d', tubelet_size=1, input_size=112, with_checkpoint=False, drop=0.0, attn_drop_rate=0.0, drop_path=0.1, head_drop_rate=0.0, disable_eval_during_finetuning=False, model_ema=False, model_ema_decay=0.9999, model_ema_force_cpu=False, opt='adamw', opt_eps=1e-08, opt_betas=[0.9, 0.999], clip_grad=1.0, momentum=0.9, weight_decay=0.05, weight_decay_end=None, lr=0.0002, layer_decay=1.0, warmup_lr=1e-08, min_lr=1e-06, warmup_epochs=30, warmup_steps=-1, color_jitter=0.4, num_sample=2, aa='rand-m7-n4-mstd0.5-inc1', smoothing=0.1, train_interpolation='bicubic', crop_pct=None, short_side_size=112, test_num_segment=2, test_num_crop=3, reprob=0.25, remode='pixel', recount=1, resplit=False, mixup=0.8, cutmix=1.0, cutmix_minmax=None, mixup_prob=1.0, mixup_switch_prob=0.5, mixup_mode='batch', finetune='', model_key='model|module', model_prefix='', init_scale=0.001, use_mean_pooling=True, data_path='../dataset/shared_list/UCF', data_root='/localdisk2/dataset/mmdataset', eval_data_path=None, nb_classes=101, imagenet_default_mean_and_std=True, num_segments=1, num_frames=16, sampling_rate=4, sparse_sample=False, data_set='UCF101', fname_tmpl='img_{:05}.jpg', start_idx=1, output_dir='local/UCF/svc2d', log_dir='local/UCF/svc2d', device='cuda', seed=0, resume='', auto_resume=True, save_ckpt=True, start_epoch=0, eval=False, validation=True, dist_eval=False, num_workers=12, pin_mem=True, world_size=1, dist_on_itp=False, dist_url='env://', enable_deepspeed=False, debug=False, coded_type='pami', coded_template_folder='./decorrelation_training_wd0_norm_new', local_rank=0, cross_model_path='None', rank=0, gpu=0, distributed=True, dist_backend='nccl')
+Number of the class = 101
+Number of the class = 101
+Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x7f548cb97760>
+Mixup is activated!
+Patch size = (8, 8)
+Model = C2DPt(
+  (conv1): PatternConv(
+    pattern_size=(8, 8), Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight00): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight01): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight02): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight03): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight04): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight05): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight06): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight07): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight10): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight11): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight12): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight13): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight14): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight15): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight16): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight17): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight20): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight21): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight22): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight23): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight24): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight25): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight26): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight27): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight30): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight31): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight32): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight33): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight34): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight35): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight36): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight37): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight40): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight41): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight42): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight43): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight44): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight45): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight46): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight47): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight50): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight51): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight52): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight53): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight54): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight55): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight56): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight57): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight60): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight61): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight62): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight63): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight64): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight65): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight66): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight67): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight70): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight71): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight72): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight73): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight74): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight75): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight76): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+    (weight77): Conv2d(1, 64, kernel_size=(3, 3), stride=(8, 8))
+  )
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (conv2): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (conv3a): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv3b): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (conv4a): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv4b): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (conv5a): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv5b): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn5): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc6): Linear(in_features=8192, out_features=4096, bias=True)
+  (bn6): BatchNorm2d(4096, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc7): Linear(in_features=4096, out_features=101, bias=True)
+  (coded_layer): Exposuref(binarize_typ=full, t=16, s=8)
+)
+number of params: 43244133
+LR = 0.00002500
+Batch size = 32
+Update frequent = 1
+Number of training examples = 9537
+Number of training training per epoch = 298
+Param groups = {
+  "coded_layer_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "coded_layer.weight"
+    ],
+    "lr_scale": 365.79046825562125
+  },
+  "decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "conv1.weight00.weight",
+      "conv1.weight01.weight",
+      "conv1.weight02.weight",
+      "conv1.weight03.weight",
+      "conv1.weight04.weight",
+      "conv1.weight05.weight",
+      "conv1.weight06.weight",
+      "conv1.weight07.weight",
+      "conv1.weight10.weight",
+      "conv1.weight11.weight",
+      "conv1.weight12.weight",
+      "conv1.weight13.weight",
+      "conv1.weight14.weight",
+      "conv1.weight15.weight",
+      "conv1.weight16.weight",
+      "conv1.weight17.weight",
+      "conv1.weight20.weight",
+      "conv1.weight21.weight",
+      "conv1.weight22.weight",
+      "conv1.weight23.weight",
+      "conv1.weight24.weight",
+      "conv1.weight25.weight",
+      "conv1.weight26.weight",
+      "conv1.weight27.weight",
+      "conv1.weight30.weight",
+      "conv1.weight31.weight",
+      "conv1.weight32.weight",
+      "conv1.weight33.weight",
+      "conv1.weight34.weight",
+      "conv1.weight35.weight",
+      "conv1.weight36.weight",
+      "conv1.weight37.weight",
+      "conv1.weight40.weight",
+      "conv1.weight41.weight",
+      "conv1.weight42.weight",
+      "conv1.weight43.weight",
+      "conv1.weight44.weight",
+      "conv1.weight45.weight",
+      "conv1.weight46.weight",
+      "conv1.weight47.weight",
+      "conv1.weight50.weight",
+      "conv1.weight51.weight",
+      "conv1.weight52.weight",
+      "conv1.weight53.weight",
+      "conv1.weight54.weight",
+      "conv1.weight55.weight",
+      "conv1.weight56.weight",
+      "conv1.weight57.weight",
+      "conv1.weight60.weight",
+      "conv1.weight61.weight",
+      "conv1.weight62.weight",
+      "conv1.weight63.weight",
+      "conv1.weight64.weight",
+      "conv1.weight65.weight",
+      "conv1.weight66.weight",
+      "conv1.weight67.weight",
+      "conv1.weight70.weight",
+      "conv1.weight71.weight",
+      "conv1.weight72.weight",
+      "conv1.weight73.weight",
+      "conv1.weight74.weight",
+      "conv1.weight75.weight",
+      "conv1.weight76.weight",
+      "conv1.weight77.weight",
+      "conv2.weight",
+      "conv3a.weight",
+      "conv3b.weight",
+      "conv4a.weight",
+      "conv4b.weight",
+      "conv5a.weight",
+      "conv5b.weight",
+      "fc6.weight",
+      "fc7.weight"
+    ],
+    "lr_scale": 1.0
+  },
+  "no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "conv1.weight00.bias",
+      "conv1.weight01.bias",
+      "conv1.weight02.bias",
+      "conv1.weight03.bias",
+      "conv1.weight04.bias",
+      "conv1.weight05.bias",
+      "conv1.weight06.bias",
+      "conv1.weight07.bias",
+      "conv1.weight10.bias",
+      "conv1.weight11.bias",
+      "conv1.weight12.bias",
+      "conv1.weight13.bias",
+      "conv1.weight14.bias",
+      "conv1.weight15.bias",
+      "conv1.weight16.bias",
+      "conv1.weight17.bias",
+      "conv1.weight20.bias",
+      "conv1.weight21.bias",
+      "conv1.weight22.bias",
+      "conv1.weight23.bias",
+      "conv1.weight24.bias",
+      "conv1.weight25.bias",
+      "conv1.weight26.bias",
+      "conv1.weight27.bias",
+      "conv1.weight30.bias",
+      "conv1.weight31.bias",
+      "conv1.weight32.bias",
+      "conv1.weight33.bias",
+      "conv1.weight34.bias",
+      "conv1.weight35.bias",
+      "conv1.weight36.bias",
+      "conv1.weight37.bias",
+      "conv1.weight40.bias",
+      "conv1.weight41.bias",
+      "conv1.weight42.bias",
+      "conv1.weight43.bias",
+      "conv1.weight44.bias",
+      "conv1.weight45.bias",
+      "conv1.weight46.bias",
+      "conv1.weight47.bias",
+      "conv1.weight50.bias",
+      "conv1.weight51.bias",
+      "conv1.weight52.bias",
+      "conv1.weight53.bias",
+      "conv1.weight54.bias",
+      "conv1.weight55.bias",
+      "conv1.weight56.bias",
+      "conv1.weight57.bias",
+      "conv1.weight60.bias",
+      "conv1.weight61.bias",
+      "conv1.weight62.bias",
+      "conv1.weight63.bias",
+      "conv1.weight64.bias",
+      "conv1.weight65.bias",
+      "conv1.weight66.bias",
+      "conv1.weight67.bias",
+      "conv1.weight70.bias",
+      "conv1.weight71.bias",
+      "conv1.weight72.bias",
+      "conv1.weight73.bias",
+      "conv1.weight74.bias",
+      "conv1.weight75.bias",
+      "conv1.weight76.bias",
+      "conv1.weight77.bias",
+      "bn1.weight",
+      "bn1.bias",
+      "conv2.bias",
+      "bn2.weight",
+      "bn2.bias",
+      "conv3a.bias",
+      "conv3b.bias",
+      "bn3.weight",
+      "bn3.bias",
+      "conv4a.bias",
+      "conv4b.bias",
+      "bn4.weight",
+      "bn4.bias",
+      "conv5a.bias",
+      "conv5b.bias",
+      "bn5.weight",
+      "bn5.bias",
+      "fc6.bias",
+      "bn6.weight",
+      "bn6.bias",
+      "fc7.bias"
+    ],
+    "lr_scale": 1.0
+  }
+}
+optimizer settings: {'lr': 2.5e-05, 'weight_decay': 0.0, 'eps': 1e-08, 'betas': [0.9, 0.999]}
+Use step level LR scheduler!
+Set warmup steps = 8940
+Set warmup steps = 0
+Max WD = 0.0500000, Min WD = 0.0500000
+criterion = SoftTargetCrossEntropy()
+Auto resume checkpoint: local/UCF/svc2d/checkpoint-199.pth
+Resume checkpoint local/UCF/svc2d/checkpoint-199.pth
+With optim & sched!
+/opt/conda/lib/python3.10/site-packages/torch/nn/functional.py:1374: UserWarning: dropout2d: Received a 2-D input to dropout2d, which is deprecated and will result in an error in a future release. To retain the behavior and silence this warning, please use dropout instead. Note that dropout2d exists to provide channel-wise dropout on inputs with 2 spatial dimensions, a channel dimension, and an optional batch dimension (i.e. 3D or 4D inputs).
+  warnings.warn(warn_msg)
+Val:  [ 0/79]  eta: 0:07:29  loss: 1.1722 (1.1722)  acc1: 72.9167 (72.9167)  acc5: 89.5833 (89.5833)  time: 5.6952 (5.6952 -- 5.6952)  data: 2.5150 (2.5150 -- 2.5150)  max mem: 1365
+Val:  [10/79]  eta: 0:00:47  loss: 1.9394 (1.9353)  acc1: 54.1667 (53.2197)  acc5: 81.2500 (78.9773)  time: 0.6917 (0.1653 -- 5.6952)  data: 0.2291 (0.0002 -- 2.5150)  max mem: 1365
+Val:  [20/79]  eta: 0:00:27  loss: 2.1329 (2.1459)  acc1: 45.8333 (48.2143)  acc5: 75.0000 (74.9008)  time: 0.2042 (0.1653 -- 0.2559)  data: 0.0007 (0.0002 -- 0.0029)  max mem: 1365
+Val:  [30/79]  eta: 0:00:19  loss: 2.4503 (2.3115)  acc1: 39.5833 (43.4812)  acc5: 68.7500 (71.3038)  time: 0.2260 (0.1653 -- 0.3626)  data: 0.0012 (0.0002 -- 0.0062)  max mem: 1365
+Val:  [40/79]  eta: 0:00:13  loss: 2.4207 (2.2736)  acc1: 41.6667 (44.1565)  acc5: 72.9167 (71.9512)  time: 0.2115 (0.1615 -- 0.3626)  data: 0.0009 (0.0002 -- 0.0062)  max mem: 1365
+Val:  [50/79]  eta: 0:00:09  loss: 2.4343 (2.4206)  acc1: 33.3333 (40.8497)  acc5: 68.7500 (68.7909)  time: 0.1933 (0.1615 -- 0.2379)  data: 0.0005 (0.0002 -- 0.0013)  max mem: 1365
+Val:  [60/79]  eta: 0:00:05  loss: 2.7551 (2.4332)  acc1: 33.3333 (40.3689)  acc5: 64.5833 (68.8525)  time: 0.1860 (0.1591 -- 0.2379)  data: 0.0006 (0.0001 -- 0.0021)  max mem: 1365
+Val:  [70/79]  eta: 0:00:02  loss: 2.4014 (2.3869)  acc1: 37.5000 (41.0798)  acc5: 72.9167 (70.0998)  time: 0.1565 (0.1109 -- 0.2093)  data: 0.0003 (0.0001 -- 0.0021)  max mem: 1365
+Val:  [78/79]  eta: 0:00:00  loss: 2.3263 (2.4078)  acc1: 41.6667 (41.1578)  acc5: 70.8333 (69.6273)  time: 0.1501 (0.1109 -- 0.3859)  data: 0.0002 (0.0001 -- 0.0004)  max mem: 1365
+Val: Total time: 0:00:20 (0.2585 s / it)
+* Acc@1 41.158 Acc@5 69.627 loss 2.408
+3783 val images: Top-1 41.16%, Top-5 69.63%, loss 2.4078

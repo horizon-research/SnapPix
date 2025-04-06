@@ -1,0 +1,4 @@
+- K400: wget "https://drive.usercontent.google.com/download?id=11US3KptpqHsZ5K4wQLzs-OA3Y50OWtPJ&export=download&authuser=0"
+- K600: wget "https://drive.usercontent.google.com/download?id=1kzfOEb6_va0ev5TYbLLMRB0SvSvtPl-S&export=download&authuser=0"
+- K710: wget "https://drive.usercontent.google.com/download?id=1DdBiwG3cCJ60Rstx3-FuFlt9Q-mUCyE2&export=download&authuser=0"
+- SSV2: wget "https://drive.usercontent.google.com/download?id=1OtQzj1S0HjgUciB7cZa4MCDHXQ20FpZg&export=download&authuser=0"

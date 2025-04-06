@@ -1,0 +1,3 @@
+python3 copy_k710_data.py --csv dataset_lists/K710/train.csv --ktype k400 --input mmdataset/k400_processed/ --output mmdataset/k710_train
+python3 copy_k710_data.py --csv dataset_lists/K710/train.csv --ktype k600 --input mmdataset/k600_processed/ --output mmdataset/k710_train
+python3 copy_k710_data.py --csv dataset_lists/K710/train.csv --ktype k700 --input mmdataset/k700_processed/ --output mmdataset/k710_train

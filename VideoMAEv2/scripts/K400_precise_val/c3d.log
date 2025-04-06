@@ -1,0 +1,157 @@
++ unset SLURM_PROCID
++ export MASTER_PORT=14811
++ MASTER_PORT=14811
++ export OMP_NUM_THREADS=1
++ OMP_NUM_THREADS=1
++ export CUDA_VISIBLE_DEVICES=0
++ CUDA_VISIBLE_DEVICES=0
++ LR=2e-4
++ OUTPUT_DIR=local/k400/c3d
++ DATA_PATH=../dataset/shared_list/K400
++ python3 -m torch.distributed.launch --nproc_per_node=1 --master_port=14811 --nnodes=1 run_class_finetuning.py --model c3d --data_set Kinetics-400 --nb_classes 400 --data_root /local_scratch/26477563/mmdataset/ --data_path ../dataset/shared_list/K400 --log_dir local/k400/c3d --output_dir local/k400/c3d --batch_size 32 --num_sample 2 --input_size 112 --short_side_size 112 --save_ckpt_freq 10 --num_frames 16 --opt adamw --lr 2e-4 --clip_grad 1.0 --num_workers 10 --opt_betas 0.9 0.999 --weight_decay 0.001 --layer_decay 1.0 --epochs 200 --test_num_segment 2 --test_num_crop 3 --local-rank 0 --update_freq 2 --warmup_epochs 30 --validation
+/scratch/wlin33/anaconda_wlin33/envs/coded/lib/python3.10/site-packages/torch/distributed/launch.py:183: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use-env is set by default in torchrun.
+If your script expects `--local-rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+[2024-11-17 11:13:19,484] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+| distributed init (rank 0): env://, gpu 0
+Namespace(batch_size=32, epochs=200, update_freq=2, save_ckpt_freq=10, model='c3d', tubelet_size=2, input_size=112, with_checkpoint=False, drop=0.0, attn_drop_rate=0.0, drop_path=0.1, head_drop_rate=0.0, disable_eval_during_finetuning=False, model_ema=False, model_ema_decay=0.9999, model_ema_force_cpu=False, opt='adamw', opt_eps=1e-08, opt_betas=[0.9, 0.999], clip_grad=1.0, momentum=0.9, weight_decay=0.001, weight_decay_end=None, lr=0.0002, layer_decay=1.0, warmup_lr=1e-08, min_lr=1e-06, warmup_epochs=30, warmup_steps=-1, color_jitter=0.4, num_sample=2, aa='rand-m7-n4-mstd0.5-inc1', smoothing=0.1, train_interpolation='bicubic', crop_pct=None, short_side_size=112, test_num_segment=2, test_num_crop=3, reprob=0.25, remode='pixel', recount=1, resplit=False, mixup=0.8, cutmix=1.0, cutmix_minmax=None, mixup_prob=1.0, mixup_switch_prob=0.5, mixup_mode='batch', finetune='', model_key='model|module', model_prefix='', init_scale=0.001, use_mean_pooling=True, data_path='../dataset/shared_list/K400', data_root='/local_scratch/26477563/mmdataset/', eval_data_path=None, nb_classes=400, imagenet_default_mean_and_std=True, num_segments=1, num_frames=16, sampling_rate=4, sparse_sample=False, data_set='Kinetics-400', fname_tmpl='img_{:05}.jpg', start_idx=1, output_dir='local/k400/c3d', log_dir='local/k400/c3d', device='cuda', seed=0, resume='', auto_resume=True, save_ckpt=True, start_epoch=0, eval=False, validation=True, dist_eval=False, num_workers=10, pin_mem=True, world_size=1, dist_on_itp=False, dist_url='env://', enable_deepspeed=False, debug=False, local_rank=0, rank=0, gpu=0, distributed=True, dist_backend='nccl')
+Number of the class = 400
+Number of the class = 400
+Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x2af98d53f280>
+Mixup is activated!
+/gpfs/fs2/scratch/wlin33/CodedExposure/VideoMAEv2/coded/coded_AR/models/c3d.py:52: UserWarning: nn.init.kaiming_normal is now deprecated in favor of nn.init.kaiming_normal_.
+  m.weight = nn.init.kaiming_normal(m.weight, mode='fan_out')
+Patch size = (8, 8)
+Model = C3D(
+  (conv1): Conv3d(1, 64, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  (bn1): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (conv2): Conv3d(64, 128, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  (bn2): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (conv3a): Conv3d(128, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  (conv3b): Conv3d(256, 256, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  (bn3): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (conv4a): Conv3d(256, 512, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  (conv4b): Conv3d(512, 512, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  (bn4): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (conv5a): Conv3d(512, 512, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  (conv5b): Conv3d(512, 512, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1))
+  (bn5): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc6): Linear(in_features=8192, out_features=4096, bias=True)
+  (bn6): BatchNorm2d(4096, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc7): Linear(in_features=4096, out_features=400, bias=True)
+)
+number of params: 62860944
+LR = 0.00005000
+Batch size = 64
+Update frequent = 2
+Number of training examples = 240436
+Number of training training per epoch = 3756
+Param groups = {
+  "decay": {
+    "weight_decay": 0.001,
+    "params": [
+      "conv1.weight",
+      "conv2.weight",
+      "conv3a.weight",
+      "conv3b.weight",
+      "conv4a.weight",
+      "conv4b.weight",
+      "conv5a.weight",
+      "conv5b.weight",
+      "fc6.weight",
+      "fc7.weight"
+    ],
+    "lr_scale": 1.0
+  },
+  "no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "conv1.bias",
+      "bn1.weight",
+      "bn1.bias",
+      "conv2.bias",
+      "bn2.weight",
+      "bn2.bias",
+      "conv3a.bias",
+      "conv3b.bias",
+      "bn3.weight",
+      "bn3.bias",
+      "conv4a.bias",
+      "conv4b.bias",
+      "bn4.weight",
+      "bn4.bias",
+      "conv5a.bias",
+      "conv5b.bias",
+      "bn5.weight",
+      "bn5.bias",
+      "fc6.bias",
+      "bn6.weight",
+      "bn6.bias",
+      "fc7.bias"
+    ],
+    "lr_scale": 1.0
+  }
+}
+optimizer settings: {'lr': 5e-05, 'weight_decay': 0.0, 'eps': 1e-08, 'betas': [0.9, 0.999]}
+Use step level LR scheduler!
+Set warmup steps = 112680
+Set warmup steps = 0
+Max WD = 0.0010000, Min WD = 0.0010000
+criterion = SoftTargetCrossEntropy()
+Auto resume checkpoint: local/k400/c3d/checkpoint-199.pth
+Resume checkpoint local/k400/c3d/checkpoint-199.pth
+With optim & sched!
+/scratch/wlin33/anaconda_wlin33/envs/coded/lib/python3.10/site-packages/torch/nn/functional.py:1374: UserWarning: dropout2d: Received a 2-D input to dropout2d, which is deprecated and will result in an error in a future release. To retain the behavior and silence this warning, please use dropout instead. Note that dropout2d exists to provide channel-wise dropout on inputs with 2 spatial dimensions, a channel dimension, and an optional batch dimension (i.e. 3D or 4D inputs).
+  warnings.warn(warn_msg)
+Val:  [  0/413]  eta: 0:43:23  loss: 2.4800 (2.4800)  acc1: 52.0833 (52.0833)  acc5: 75.0000 (75.0000)  time: 6.3036 (6.3036 -- 6.3036)  data: 1.3952 (1.3952 -- 1.3952)  max mem: 11186
+Val:  [ 10/413]  eta: 0:04:43  loss: 2.7970 (2.7372)  acc1: 43.7500 (41.8561)  acc5: 66.6667 (67.2349)  time: 0.7030 (0.0446 -- 6.3036)  data: 0.1270 (0.0001 -- 1.3952)  max mem: 11186
+Val:  [ 20/413]  eta: 0:02:33  loss: 2.7291 (2.7417)  acc1: 41.6667 (41.6667)  acc5: 66.6667 (67.4603)  time: 0.0943 (0.0446 -- 1.0222)  data: 0.0002 (0.0001 -- 0.0007)  max mem: 11186
+Val:  [ 30/413]  eta: 0:01:46  loss: 2.7127 (2.7429)  acc1: 41.6667 (41.8011)  acc5: 68.7500 (68.0780)  time: 0.0456 (0.0451 -- 0.0459)  data: 0.0002 (0.0001 -- 0.0007)  max mem: 11186
+Val:  [ 40/413]  eta: 0:01:24  loss: 2.7255 (2.7740)  acc1: 39.5833 (39.9390)  acc5: 68.7500 (67.3272)  time: 0.0531 (0.0446 -- 0.1986)  data: 0.0080 (0.0001 -- 0.1563)  max mem: 11186
+Val:  [ 50/413]  eta: 0:01:09  loss: 2.7153 (2.7435)  acc1: 39.5833 (40.2778)  acc5: 66.6667 (67.5654)  time: 0.0533 (0.0446 -- 0.1986)  data: 0.0080 (0.0001 -- 0.1563)  max mem: 11186
+Val:  [ 60/413]  eta: 0:00:59  loss: 2.5933 (2.7268)  acc1: 41.6667 (41.0178)  acc5: 66.6667 (68.0669)  time: 0.0503 (0.0446 -- 0.1399)  data: 0.0051 (0.0001 -- 0.0975)  max mem: 11186
+Val:  [ 70/413]  eta: 0:00:52  loss: 2.6460 (2.7282)  acc1: 43.7500 (41.3146)  acc5: 68.7500 (67.9284)  time: 0.0579 (0.0446 -- 0.1517)  data: 0.0132 (0.0001 -- 0.1095)  max mem: 11186
+Val:  [ 80/413]  eta: 0:00:47  loss: 2.6815 (2.7330)  acc1: 41.6667 (41.3837)  acc5: 66.6667 (67.7726)  time: 0.0603 (0.0445 -- 0.1700)  data: 0.0157 (0.0001 -- 0.1276)  max mem: 11186
+Val:  [ 90/413]  eta: 0:00:42  loss: 2.6944 (2.7332)  acc1: 39.5833 (41.0714)  acc5: 64.5833 (67.8343)  time: 0.0590 (0.0445 -- 0.1700)  data: 0.0144 (0.0001 -- 0.1276)  max mem: 11186
+Val:  [100/413]  eta: 0:00:39  loss: 2.7230 (2.7319)  acc1: 39.5833 (41.1304)  acc5: 64.5833 (67.7805)  time: 0.0585 (0.0448 -- 0.1520)  data: 0.0139 (0.0001 -- 0.1097)  max mem: 11186
+Val:  [110/413]  eta: 0:00:36  loss: 2.7230 (2.7284)  acc1: 41.6667 (41.3476)  acc5: 68.7500 (67.9242)  time: 0.0586 (0.0444 -- 0.1480)  data: 0.0139 (0.0001 -- 0.1058)  max mem: 11186
+Val:  [120/413]  eta: 0:00:33  loss: 2.7191 (2.7331)  acc1: 41.6667 (41.3912)  acc5: 66.6667 (67.7686)  time: 0.0593 (0.0444 -- 0.1507)  data: 0.0147 (0.0001 -- 0.1082)  max mem: 11186
+Val:  [130/413]  eta: 0:00:31  loss: 2.6754 (2.7276)  acc1: 41.6667 (41.5235)  acc5: 66.6667 (67.9230)  time: 0.0609 (0.0446 -- 0.1799)  data: 0.0163 (0.0001 -- 0.1379)  max mem: 11186
+Val:  [140/413]  eta: 0:00:29  loss: 2.6608 (2.7267)  acc1: 43.7500 (41.6371)  acc5: 68.7500 (67.9669)  time: 0.0605 (0.0445 -- 0.1799)  data: 0.0158 (0.0001 -- 0.1379)  max mem: 11186
+Val:  [150/413]  eta: 0:00:27  loss: 2.6822 (2.7275)  acc1: 41.6667 (41.6391)  acc5: 68.7500 (67.9498)  time: 0.0591 (0.0444 -- 0.1797)  data: 0.0141 (0.0001 -- 0.1372)  max mem: 11186
+Val:  [160/413]  eta: 0:00:25  loss: 2.7249 (2.7228)  acc1: 39.5833 (41.6020)  acc5: 68.7500 (68.0771)  time: 0.0604 (0.0444 -- 0.1598)  data: 0.0156 (0.0001 -- 0.1176)  max mem: 11186
+Val:  [170/413]  eta: 0:00:23  loss: 2.7630 (2.7225)  acc1: 41.6667 (41.6423)  acc5: 68.7500 (68.1043)  time: 0.0623 (0.0447 -- 0.1598)  data: 0.0177 (0.0001 -- 0.1176)  max mem: 11186
+Val:  [180/413]  eta: 0:00:22  loss: 2.6235 (2.7143)  acc1: 43.7500 (41.6552)  acc5: 68.7500 (68.1860)  time: 0.0602 (0.0447 -- 0.1500)  data: 0.0155 (0.0001 -- 0.1074)  max mem: 11186
+Val:  [190/413]  eta: 0:00:21  loss: 2.7092 (2.7184)  acc1: 41.6667 (41.5467)  acc5: 68.7500 (68.0956)  time: 0.0598 (0.0445 -- 0.1754)  data: 0.0151 (0.0001 -- 0.1329)  max mem: 11186
+Val:  [200/413]  eta: 0:00:19  loss: 2.7179 (2.7148)  acc1: 39.5833 (41.5008)  acc5: 68.7500 (68.2007)  time: 0.0613 (0.0445 -- 0.1754)  data: 0.0165 (0.0001 -- 0.1329)  max mem: 11186
+Val:  [210/413]  eta: 0:00:18  loss: 2.6791 (2.7180)  acc1: 39.5833 (41.4001)  acc5: 68.7500 (68.1378)  time: 0.0612 (0.0445 -- 0.1860)  data: 0.0163 (0.0001 -- 0.1437)  max mem: 11186
+Val:  [220/413]  eta: 0:00:17  loss: 2.7183 (2.7182)  acc1: 37.5000 (41.3650)  acc5: 68.7500 (68.2032)  time: 0.0615 (0.0448 -- 0.1860)  data: 0.0167 (0.0001 -- 0.1437)  max mem: 11186
+Val:  [230/413]  eta: 0:00:16  loss: 2.5671 (2.7136)  acc1: 41.6667 (41.3961)  acc5: 68.7500 (68.2450)  time: 0.0625 (0.0448 -- 0.1797)  data: 0.0166 (0.0001 -- 0.1372)  max mem: 11186
+Val:  [240/413]  eta: 0:00:15  loss: 2.5865 (2.7135)  acc1: 43.7500 (41.4851)  acc5: 68.7500 (68.2659)  time: 0.0615 (0.0448 -- 0.1772)  data: 0.0156 (0.0001 -- 0.1351)  max mem: 11186
+Val:  [250/413]  eta: 0:00:14  loss: 2.6626 (2.7096)  acc1: 43.7500 (41.6169)  acc5: 66.6667 (68.2603)  time: 0.0595 (0.0448 -- 0.1757)  data: 0.0146 (0.0001 -- 0.1333)  max mem: 11186
+Val:  [260/413]  eta: 0:00:13  loss: 2.5637 (2.7080)  acc1: 43.7500 (41.6986)  acc5: 66.6667 (68.2791)  time: 0.0585 (0.0447 -- 0.1757)  data: 0.0136 (0.0001 -- 0.1333)  max mem: 11186
+Val:  [270/413]  eta: 0:00:12  loss: 2.6300 (2.7086)  acc1: 43.7500 (41.7359)  acc5: 68.7500 (68.2196)  time: 0.0605 (0.0447 -- 0.1662)  data: 0.0159 (0.0001 -- 0.1240)  max mem: 11186
+Val:  [280/413]  eta: 0:00:11  loss: 2.6848 (2.7085)  acc1: 39.5833 (41.6222)  acc5: 64.5833 (68.1643)  time: 0.0604 (0.0448 -- 0.1662)  data: 0.0156 (0.0001 -- 0.1240)  max mem: 11186
+Val:  [290/413]  eta: 0:00:10  loss: 2.8103 (2.7115)  acc1: 41.6667 (41.5951)  acc5: 64.5833 (68.0627)  time: 0.0590 (0.0448 -- 0.1627)  data: 0.0141 (0.0001 -- 0.1203)  max mem: 11186
+Val:  [300/413]  eta: 0:00:09  loss: 2.8288 (2.7173)  acc1: 41.6667 (41.5006)  acc5: 64.5833 (67.8987)  time: 0.0606 (0.0448 -- 0.1617)  data: 0.0160 (0.0001 -- 0.1195)  max mem: 11186
+Val:  [310/413]  eta: 0:00:08  loss: 2.8869 (2.7239)  acc1: 35.4167 (41.4054)  acc5: 64.5833 (67.6983)  time: 0.0599 (0.0446 -- 0.1797)  data: 0.0151 (0.0001 -- 0.1373)  max mem: 11186
+Val:  [320/413]  eta: 0:00:07  loss: 2.7560 (2.7229)  acc1: 41.6667 (41.5109)  acc5: 66.6667 (67.7505)  time: 0.0722 (0.0446 -- 0.4407)  data: 0.0271 (0.0001 -- 0.3982)  max mem: 11186
+Val:  [330/413]  eta: 0:00:06  loss: 2.6093 (2.7203)  acc1: 45.8333 (41.6037)  acc5: 68.7500 (67.7681)  time: 0.0699 (0.0447 -- 0.4407)  data: 0.0248 (0.0001 -- 0.3982)  max mem: 11186
+Val:  [340/413]  eta: 0:00:05  loss: 2.5661 (2.7169)  acc1: 45.8333 (41.6972)  acc5: 68.7500 (67.8153)  time: 0.0502 (0.0448 -- 0.1375)  data: 0.0049 (0.0001 -- 0.0951)  max mem: 11186
+Val:  [350/413]  eta: 0:00:04  loss: 2.7645 (2.7209)  acc1: 43.7500 (41.6845)  acc5: 66.6667 (67.7172)  time: 0.0521 (0.0448 -- 0.1751)  data: 0.0068 (0.0001 -- 0.1325)  max mem: 11186
+Val:  [360/413]  eta: 0:00:04  loss: 2.7645 (2.7216)  acc1: 41.6667 (41.6955)  acc5: 64.5833 (67.6708)  time: 0.0594 (0.0448 -- 0.1931)  data: 0.0143 (0.0001 -- 0.1509)  max mem: 11186
+Val:  [370/413]  eta: 0:00:03  loss: 2.7397 (2.7212)  acc1: 39.5833 (41.6779)  acc5: 66.6667 (67.6606)  time: 0.0618 (0.0446 -- 0.1931)  data: 0.0169 (0.0001 -- 0.1509)  max mem: 11186
+Val:  [380/413]  eta: 0:00:02  loss: 2.7376 (2.7207)  acc1: 39.5833 (41.6612)  acc5: 64.5833 (67.5853)  time: 0.0621 (0.0446 -- 0.1860)  data: 0.0174 (0.0001 -- 0.1436)  max mem: 11186
+Val:  [390/413]  eta: 0:00:01  loss: 2.7415 (2.7241)  acc1: 39.5833 (41.5548)  acc5: 66.6667 (67.5298)  time: 0.0684 (0.0447 -- 0.2691)  data: 0.0237 (0.0001 -- 0.2266)  max mem: 11186
+Val:  [400/413]  eta: 0:00:00  loss: 2.7415 (2.7244)  acc1: 39.5833 (41.6043)  acc5: 66.6667 (67.5187)  time: 0.0606 (0.0444 -- 0.2691)  data: 0.0156 (0.0001 -- 0.2266)  max mem: 11186
+Val:  [410/413]  eta: 0:00:00  loss: 2.6874 (2.7222)  acc1: 43.7500 (41.6413)  acc5: 66.6667 (67.5081)  time: 0.0491 (0.0444 -- 0.0912)  data: 0.0041 (0.0000 -- 0.0489)  max mem: 11186
+Val:  [412/413]  eta: 0:00:00  loss: 2.6695 (2.7217)  acc1: 41.6667 (41.6599)  acc5: 68.7500 (67.5187)  time: 0.1634 (0.0449 -- 2.3294)  data: 0.0041 (0.0000 -- 0.0489)  max mem: 11186
+Val: Total time: 0:00:33 (0.0818 s / it)
+* Acc@1 41.660 Acc@5 67.519 loss 2.722
+19796 val images: Top-1 41.66%, Top-5 67.52%, loss 2.7217

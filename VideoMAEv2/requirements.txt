@@ -1,0 +1,17 @@
+av
+decord
+deepspeed
+einops
+matplotlib
+numpy
+opencv-python
+pandas
+Pillow
+scipy
+tensorboard
+tensorboardX
+timm
+torch
+torchaudio
+torchvision
+triton

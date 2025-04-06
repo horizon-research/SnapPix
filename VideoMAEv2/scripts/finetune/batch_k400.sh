@@ -1,0 +1,3 @@
+bash scripts/finetune/coded_vitb_k400_ptft_4090.sh
+bash scripts/finetune/coded_vits_k400_ptft_4090.sh
+bash scripts/finetune/video_vit_k400_super_tiny_ft.sh
