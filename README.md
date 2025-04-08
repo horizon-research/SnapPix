@@ -1,7 +1,6 @@
 # 🚀 SnapPix
 
-**Official Code for DAC'25**  
-**📄 Paper Title:** *SnapPix: Efficient-Coding–Inspired In-Sensor Compression for Edge Vision*
+## **Official Code for** 📄 **DAC'25 Paper:**  *SnapPix: Efficient-Coding–Inspired In-Sensor Compression for Edge Vision*  📚 [Paper Link](https://arxiv.org/abs/2504.04535)  
 
 ---
 
